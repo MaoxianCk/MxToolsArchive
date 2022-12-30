@@ -1,0 +1,13 @@
+[
+  {
+    "name": "程序员的工具箱",
+    "code": "dev",
+    "children": [
+      {
+        "name": "正则表达式",
+        "code": "regex",
+        "description": "正则测试, 常用正则表达式收集"
+      }
+    ]
+  }
+]
