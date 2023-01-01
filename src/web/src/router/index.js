@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import pinia from '@/stores/index.js'
+import { useModuleRoutesStore } from '@/stores/moduleRoutes'
+
 import moduleList from '@/moduleList.json'
 
 const createModuleRoutes = _moduleList => {
@@ -8,7 +11,8 @@ const createModuleRoutes = _moduleList => {
     let item = {
       path: module.code,
       name: module.name,
-      children: isLeaf ? null : []
+      children: isLeaf ? null : [],
+      info: module
     }
     if (isLeaf) {
       item.component = () => import(`@/modules/${module.code}.vue`)
@@ -28,24 +32,39 @@ const createModuleRoutes = _moduleList => {
   return results
 }
 
-const moduleRoutes = createModuleRoutes(moduleList)
-console.log(moduleRoutes)
+// 工具模块路由对象
+const moduleRoute = {
+  path: '/tool',
+  children: createModuleRoutes(moduleList)
+}
 
-
+// 创建router
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/tool',
-      children: moduleRoutes
+      path: '/',
+      component: () => import('@/views/HomeView.vue')
+    },
+
+    moduleRoute,
+
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     }
   ]
 })
 
-router.beforeEach((to, from) => {
-  console.log(to, from)
+// router 钩子
+router.beforeEach((to) => {
   document.title = to.name ? `${to.name} | MxTools` : 'MxTools'
-  return true;
 })
+
+// 设置工具模块路由到store中
+const store = useModuleRoutesStore(pinia)
+store.setModuleRoutes(moduleRoute)
+
+console.log(router.getRoutes())
 
 export default router

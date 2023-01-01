@@ -8,7 +8,7 @@ import MxHeader from '@/components/MxHeader.vue'
     <n-layout-header>
       <mx-header />
     </n-layout-header>
-    <n-layout-content content-style="padding: 24px;">
+    <n-layout-content content-style="padding: 0 10% 0 10%;">
       <RouterView />
     </n-layout-content>
   </n-layout>

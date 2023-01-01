@@ -6,14 +6,17 @@ import MxGlobalSearch from '@/components/MxGlobalSearch.vue'
 <template>
   <div class="header-wrapper">
     <!-- 左侧标题logo -->
-    <div class="header-title">
-      <div class="header-logo">
-        <Icon :size="36">
-          <img src="@/assets/svgs/hammer.svg">
-        </Icon>
+    <!-- todo hover鼠标特效 -->
+    <RouterLink to="/" class="no-link">
+      <div class="header-title">
+        <div class="header-logo">
+          <Icon :size="36">
+            <img src="@/assets/svgs/hammer.svg">
+          </Icon>
+        </div>
+        <div class="header-text">Mx-Tools</div>
       </div>
-      <div>Mx-Tools</div>
-    </div>
+    </RouterLink>
 
     <!-- 搜索框 -->
     <div class="header-search">
@@ -45,6 +48,8 @@ import MxGlobalSearch from '@/components/MxGlobalSearch.vue'
 
     font-family: 'smiley-sans';
     font-size: 20px;
+
+    cursor: pointer;
 }
 
 .header-title > .header-logo {
