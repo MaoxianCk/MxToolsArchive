@@ -1,14 +1,14 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useModuleRoutesStore = defineStore('ModuleRoutes', () => {
-  const moduleRoutes = ref({})
-  const setModuleRoutes = value => {
-    moduleRoutes.value = value
+export const useModuleRouteStore = defineStore('ModuleRoute', () => {
+  const moduleRoute = ref({})
+  const setModuleRoute = value => {
+    moduleRoute.value = value
   }
   const getFiltered = () => {
-    return moduleRoutes
+    return moduleRoute
   }
 
-  return { moduleRoutes, setModuleRoutes, getFiltered }
+  return { moduleRoute, setModuleRoute, getFiltered }
 })
