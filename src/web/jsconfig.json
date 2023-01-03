@@ -1,17 +1,13 @@
 {
     "compilerOptions": {
         "allowJs": true,
-        // "baseUrl": ".",
-        // "paths": {
-        //     "@/*": [
-        //         "./src/*"
-        //     ]
-        // },
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
     },
-    // "include": [
-    //     "src/**/*.ts",
-    //     "src/**/*.d.ts",
-    //     "src/**/*.tsx",
-    //     "src/**/*.vue"
-    // ]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
 }

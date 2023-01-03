@@ -27,36 +27,36 @@ import MxGlobalSearch from '@/components/MxGlobalSearch.vue'
 
 <style scoped>
 .header-wrapper {
-    --header-title-width: 160px;
+  --header-title-width: 160px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    width: 100%;
-    height: var(--header-height);
-    border-bottom: var(--main-color) 2px solid;
+  width: 100%;
+  height: var(--header-height);
+  border-bottom: var(--main-color) 2px solid;
 }
 
 .header-title {
-    /* background-color: gray; */
-    width: var(--header-title-width);
-    height: var(--header-height);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* background-color: gray; */
+  width: var(--header-title-width);
+  height: var(--header-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    font-family: 'smiley-sans';
-    font-size: 20px;
+  font-family: 'smiley-sans';
+  font-size: 20px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.header-title > .header-logo {
-    margin-right: 12px;
+.header-title>.header-logo {
+  margin-right: 12px;
 }
 
 .header-search {
-    margin-right: 50px;
+  padding-right: 10%;
 }
 </style>

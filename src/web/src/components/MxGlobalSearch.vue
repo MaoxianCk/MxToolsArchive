@@ -1,26 +1,20 @@
 <script setup>
 import { ref } from 'vue'
+import { useModuleRouteStore } from '@/stores/moduleRoutes'
+
+const moduleRouteStore = useModuleRouteStore()
 // store 搜route
-const searchPattern = ref('')
-const searchOptions = [
-  {
-    label: '测试测试',
-    value: '测试测试关键字'
-  }, {
-    label: 'chengwpwpwpwp',
-    value: 'chengwpwpwpwp'
-  }
-]
-function handleSearch(path) {
-  console.log('jump to ' + path)
+const pattern = ref('')
+function handleInput() {
+  moduleRouteStore.setPattern(pattern.value)
 }
 </script>
 
 <template>
-  <n-auto-complete
-    v-model:value="searchPattern"
-    :options="searchOptions"
-    clear-after-select
-    blur-after-select
-    @select="handleSearch" />
+  <n-input
+    v-model:value="pattern"
+    clearable
+    :maxlength="17"
+    placeholder="你要找什么?"
+    @input="handleInput" />
 </template>
