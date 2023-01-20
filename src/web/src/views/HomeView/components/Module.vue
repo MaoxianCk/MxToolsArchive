@@ -1,5 +1,4 @@
 <script setup>
-import { useRouter } from 'vue-router';
 
 const props = defineProps({
   module: {
@@ -10,12 +9,6 @@ const props = defineProps({
   }
 })
 
-const router = useRouter()
-const jumpTo = (path) => {
-  console.log(path)
-  router.push(path)
-}
-
 </script>
 
 <template>
@@ -23,11 +16,11 @@ const jumpTo = (path) => {
     <template #header>{{ module.name }}</template>
     <span class="module-tool-card-desc">{{ module.meta.info.description }}</span>
     <template #header-extra>
-      <n-button
-        type="primary"
-        size="tiny"
-        round
-        @click="jumpTo(module.meta.routePath)">Go</n-button>
+      <router-link :to="module.meta.routePath" class="clear-a-style">
+        <n-button
+          type="primary"
+          size="tiny"
+          round>Go</n-button></router-link>
     </template>
   </n-thing>
 </template>
