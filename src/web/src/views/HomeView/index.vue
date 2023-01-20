@@ -2,53 +2,47 @@
 import { useModuleRouteStore } from '@/stores/moduleRoutes';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
+import { calIsShow } from '@/modules/tools/moduleRouteUtils';
 import Module from './components/Module.vue'
 
 const moduleRouteStore = useModuleRouteStore()
 
 const moduleRoute = moduleRouteStore.getFiltered()
-console.log(moduleRoute)
 const { filterPattern } = storeToRefs(moduleRouteStore)
 
 const isShow = computed(() => module => {
-  return (module.path.indexOf(filterPattern.value) !== -1) ? 1 : 0
+  return calIsShow(module, filterPattern.value)
 })
-
-const respondCols = () => {
-  let str = '2'
-  const span = 275
-  for (let i = 2; i <= 6; i++) {
-    str += ` ${span * i}:${i}`
-  }
-  return str
-}
 
 </script>
 
 <template>
   <div class="module-box">
     <!-- modules   -->
-    <n-grid :cols="1" y-gap="40">
-      <n-gi v-for="moduleType of moduleRoute.children" :key="moduleType.meta.routePath">
-        <n-card :title="moduleType.name">
-          <n-grid
-            :cols="respondCols()"
-            x-gap="24"
-            y-gap="24"
-            responsive="self">
-            <n-grid-item v-for="item of moduleType.children" :key="item.path" :span="isShow(item)">
-              <Module :module="item" />
-            </n-grid-item>
-          </n-grid>
-        </n-card>
-      </n-gi>
-    </n-grid>
+    <n-card v-for="moduleType of moduleRoute.children" :key="moduleType.meta.routePath" :title="moduleType.name">
+      <div class="module-box-type">
+        <template v-for="item of moduleType.children" :key="item.path">
+          <Module v-show="isShow(item)" :module="item" />
+        </template>
+      </div>
+    </n-card>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .module-box {
   width: 100%;
-  /* border: 1px solid var(--main-color); */
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin-bottom: 20px;
+  }
+
+  .module-box-type {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(347px, 1fr));
+    gap: 20px;
+  }
 }
 </style>
