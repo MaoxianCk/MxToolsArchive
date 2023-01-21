@@ -1,0 +1,15 @@
+@for $i from (5 / 5) through (100 / 5) {
+  $val: $i * 5;
+  .pl-#{$val} {
+    padding-left: #{$val}px;
+  }
+  .pr-#{$val} {
+    padding-right: #{$val}px;
+  }
+  .pt-#{$val} {
+    padding-top: #{$val}px;
+  }
+  .pb-#{$val} {
+    padding-bottom: #{$val}px;
+  }
+}

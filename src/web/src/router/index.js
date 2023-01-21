@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import pinia from '@/stores/index.js'
 import { useModuleRouteStore } from '@/stores/moduleRoutes'
-import { createModuleRoutes } from '@/modules/tools/moduleRouteUtils'
+import { createModuleRoutes } from '@/modules/utils/moduleRouteUtils'
 import moduleList from '@/moduleList.json'
 
 
 // 工具模块路由对象
 const moduleRoute = {
   path: '/tool',
+  component: () => import('@/modules/index.vue'),
   children: createModuleRoutes(moduleList, '/tool')
 }
 

@@ -2,7 +2,7 @@
 import { useModuleRouteStore } from '@/stores/moduleRoutes';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
-import { calIsShow } from '@/modules/tools/moduleRouteUtils';
+import { calIsShow } from '@/modules/utils/moduleRouteUtils';
 import Module from './components/Module.vue'
 
 const moduleRouteStore = useModuleRouteStore()

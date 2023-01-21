@@ -1,0 +1,15 @@
+@for $i from (5 / 5) through (100 / 5) {
+  $val: $i * 5;
+  .ml-#{$val} {
+    margin-left: #{$val}px;
+  }
+  .mr-#{$val} {
+    margin-right: #{$val}px;
+  }
+  .mt-#{$val} {
+    margin-top: #{$val}px;
+  }
+  .mb-#{$val} {
+    margin-bottom: #{$val}px;
+  }
+}

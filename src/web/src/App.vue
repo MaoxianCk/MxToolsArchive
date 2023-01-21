@@ -4,14 +4,16 @@ import MxHeader from '@/components/MxHeader.vue'
 </script>
 
 <template>
-  <n-layout class="wrapper">
-    <n-layout-header>
-      <mx-header />
-    </n-layout-header>
-    <n-layout-content content-style="padding: 20px 10% 0 10%;">
-      <RouterView />
-    </n-layout-content>
-  </n-layout>
+  <n-message-provider>
+    <n-layout class="wrapper">
+      <n-layout-header>
+        <mx-header />
+      </n-layout-header>
+      <n-layout-content content-style="padding: 20px 10% 0 10%;">
+        <RouterView />
+      </n-layout-content>
+    </n-layout>
+  </n-message-provider>
 </template>
 
 <style scoped>
