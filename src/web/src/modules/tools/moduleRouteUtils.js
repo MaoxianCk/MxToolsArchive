@@ -40,11 +40,8 @@ export const createModuleRoutes = (_moduleList, _routePathPrefix) => {
 }
 
 export const calIsShow = (module, pattern) => {
-  // console.log(666,module.meta.info)
-  let iskey=false;
   if(module.meta.info.keyword)
   {
-    console.log(module.meta.info.keyword)
     for(let keyword of module.meta.info.keyword)
     {
       // console.log(keyword)
