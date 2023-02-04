@@ -35,7 +35,6 @@ export const createModuleRoutes = (_moduleList, _routePathPrefix) => {
   }
   travelEach(_moduleList, results, _routePathPrefix)
   console.log(results)
-
   return results
 }
 
