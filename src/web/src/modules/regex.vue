@@ -3,7 +3,7 @@ import { ref, computed } from 'vue';
 import { doCopy } from '@/utils/copyUtil'
 import { useMessage } from 'naive-ui'
 import { Icon } from '@vicons/utils'
-import { ArrowDropDownOutlined } from '@vicons/material'
+import { ArrowDropDownOutlined, QuestionMarkOutlined } from '@vicons/material'
 const message = useMessage()
 
 const pattern = computed(() => {
@@ -44,10 +44,12 @@ const testedContent = computed(() => {
   const tag = 'span'
   let text = test.value.testContent
   const regex = new RegExp(input.value.pattern, input.value.suffix);
-  console.log(regex, input.value.pattern, input.value.suffix, regex.exec(text), text.match(regex))
+  console.log(regex, input.value.pattern, input.value.suffix, regex.exec(text), text.match(regex), text)
   if (regex.test(text)) {
+    text = text.replace('\n', '<br />');
     text = text.replace(regex, word => `<${tag} class="regex-highlight">${word}</${tag}>`);
   }
+  console.log('replaced:', text)
   return text
 })
 
@@ -59,6 +61,18 @@ const test = ref({
 const handleCopy = () => {
   doCopy(pattern.value, () => message.success('帮你复制好了 !'))
 }
+
+// regex template
+const regexTemplates = [
+  {
+    label: '数字',
+    desc: '纯数字',
+    pattern: '[0-9]*'
+  },{
+    label: 'n位的数字',
+    pattern: '[0-9]{n}'
+  }
+]
 </script>
 
 <template>
@@ -93,7 +107,37 @@ const handleCopy = () => {
     <n-divider />
     <div>
       <n-input v-model:value="test.testContent" type="textarea" placeholder="测试文本" />
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="highlight-box" v-html="test.testedContent" />
+    </div>
+    <n-divider />
+    <div id="regex-template">
+      <div class="tool-sub-title">我觉得常用的表达式</div>
+      <mx-row
+        v-for="item of regexTemplates"
+        :key="item.pattern"
+        class="mt-10 template-item"
+        align="center">
+        <template v-if="item.desc">
+          <n-tooltip trigger="hover">
+            <template #trigger>
+              <div>
+                <span class="template-item-label">
+                  *{{ item.label }}:
+                </span>
+                <span class="template-item-pattern">{{ item.pattern }}</span>
+              </div>
+            </template>
+            {{ item.desc }}
+          </n-tooltip>
+        </template>
+        <template v-else>
+          <span class="template-item-label">
+            {{ item.label }}:
+          </span>
+          <span class="template-item-pattern">{{ item.pattern }}</span>
+        </template>
+      </mx-row>
     </div>
   </div>
 </template>
@@ -113,10 +157,28 @@ const handleCopy = () => {
     border-radius: 3px;
   }
 }
+
+#regex-template {
+  .template-item {
+    text-align: center;
+
+    .template-item-label {
+      font-size: 16px;
+      // font-weight: bold;
+    }
+
+    .template-item-pattern {
+      font-size: 15px;
+      font-family: 'Courier New';
+      font-weight: bold;
+    }
+  }
+}
 </style>
 <style lang="scss">
 .regex-highlight {
   border-radius: 5px;
+
   &:nth-of-type(odd) {
     border: 1px solid rgba(255, 0, 0, 0.5);
   }

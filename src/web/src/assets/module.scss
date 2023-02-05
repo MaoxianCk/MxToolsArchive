@@ -1,0 +1,10 @@
+// 工具模块的通用样式
+// 工具模块内部的子标题, 主标题使用 n-card 的标题
+.tool-sub-title {
+  transition: color .3s var(--n-bezier);
+  padding: 20px 0;
+
+  font-size: var(--n-title-font-size);
+  font-weight: var(--n-title-font-weight);
+  color: var(--n-title-text-color);
+}
