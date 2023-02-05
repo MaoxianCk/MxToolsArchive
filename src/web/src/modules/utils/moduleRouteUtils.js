@@ -17,7 +17,7 @@ export const createModuleRoutes = (_moduleList, _routePathPrefix) => {
         isLeaf: isLeaf,
         routePath: `${pathPrefix}/${module.code}`
       }
-    }
+    } 
     if (isLeaf) {
       if (s.has(module.code)) {
         item.component = () => import(`@/modules/${module.code}.vue`)
@@ -35,10 +35,20 @@ export const createModuleRoutes = (_moduleList, _routePathPrefix) => {
   }
   travelEach(_moduleList, results, _routePathPrefix)
   console.log(results)
-
   return results
 }
 
 export const calIsShow = (module, pattern) => {
-  return module.path.indexOf(pattern) !== -1
+  if(module.meta.info.keyword)
+  {
+    for(let keyword of module.meta.info.keyword)
+    {
+      // console.log(keyword)
+      if(keyword.includes(pattern))
+      {
+         return !keyword.indexOf(pattern);
+      } 
+    }
+  }
+  return (module.path.indexOf(pattern) !== -1)||(module.meta.info.name.indexOf(pattern) !== -1)||(module.meta.info.description.indexOf(pattern) !== -1)
 }
