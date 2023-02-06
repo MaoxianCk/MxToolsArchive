@@ -17,6 +17,7 @@ jobs:
 
       - name: Install and Build   # 安装依赖、打包，如果提前已打包好无需这一步
         run: |
+          cd src/web
           npm install
           npm run build
 
@@ -24,4 +25,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: gh-pages # 部署后提交到那个分支
-          folder: dist # 这里填打包好的目录名称
+          folder: src/web/dist # 这里填打包好的目录名称
