@@ -1,4 +1,4 @@
-import{c as j,a as s,b as _,d as m,e as I,u as O,f as E,g as P,h as R,i as F,j as a,F as p,_ as z,r as L,o as h,k as y,w as u,l as $,t as b,m as S,n as T,p as M,q as V,s as D,v,x as w,y as C,z as N,A as W,B as q,C as A}from"./index-f076f4f3.js";const G=t=>{const{textColor1:e,textColor2:l,fontWeightStrong:o,fontSize:c}=t;return{fontSize:c,titleTextColor:e,textColor:l,titleFontWeight:o}},H={name:"Thing",common:j,self:G},J=H,K=s("thing",`
+import{c as j,a as s,b as _,d as m,e as I,u as O,f as E,g as P,h as R,i as F,j as a,F as p,_ as z,r as L,o as h,k as y,w as u,l as $,t as b,m as S,n as T,p as M,q as V,s as D,v,x as w,y as C,z as N,A as W,B as q,C as A}from"./index-cd732ffa.js";const G=t=>{const{textColor1:e,textColor2:l,fontWeightStrong:o,fontSize:c}=t;return{fontSize:c,titleTextColor:e,textColor:l,titleFontWeight:o}},H={name:"Thing",common:j,self:G},J=H,K=s("thing",`
  display: flex;
  transition: color .3s var(--n-bezier);
  font-size: var(--n-font-size);
