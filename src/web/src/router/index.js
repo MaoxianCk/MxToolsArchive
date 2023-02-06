@@ -12,6 +12,7 @@ const moduleRoute = {
   children: createModuleRoutes(moduleList, '/tool')
 }
 
+console.log(import.meta.env.BASE_URL)
 // 创建router
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
