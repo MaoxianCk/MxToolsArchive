@@ -17,6 +17,8 @@ jobs:
       
       - name: Pre Node
         uses: actions/setup-node@v2
+        run: |
+          cd src/web
         with:
           node-version: 16.19.0
           cache: 'npm'
