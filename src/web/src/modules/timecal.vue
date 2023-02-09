@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import moment from 'moment'
 let timer = 0
 
@@ -17,7 +17,7 @@ onMounted(() => {
     // 100比较准
   }, 100)
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
   timer && clearInterval(timer)
 })
 
