@@ -1,14 +1,17 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import moment from 'moment'
+import { MonetizationOnFilled } from '@vicons/material';
 let timer = 0
 
 const nowTime = ref('')
 
 const time = ref({
-  start: null,
+  start:null,
   // 组件的时间用的是时间戳
-  end: moment().valueOf()
+  end: null,
+  nowdata:moment().valueOf(),
+  dduration:1
 })
 
 onMounted(() => {
@@ -45,66 +48,104 @@ const timeResult = computed(() => {
   }
 })
 
-function timestampToTime(timestamp) {
-  return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
-}
 
 </script>
 
 <template>
-  <mx-row class="horizontal">
-    <div class="title">当前时间：北京时间 <a id="nowTime">{{ nowTime }}</a></div>
-  </mx-row>
-  <mx-row class="horizontal">
-    <div class="top-title">
-      <n-input-group class="mt-20">
-        开始时间：
-        <n-date-picker v-model:value="time.start" type="datetime" clearable />
-      </n-input-group>
-    </div>
-  </mx-row>
-  <mx-row class="horizontal">
-    <div class="b-title">
-      <n-input-group class="mt-20">
-        结束时间：
-        <n-date-picker v-model:value="time.end" type="datetime" clearable />
-      </n-input-group>
-    </div>
-  </mx-row>
-  <mx-row class="horizontal">
-    <div class="mt-60">
-      <mx-row>
-        年： {{ timeResult.years }}
-      </mx-row>
-      <mx-row>
-        月：{{ timeResult.months }}
-      </mx-row>
-      <mx-row>
-        天：{{ timeResult.days }}
-      </mx-row>
-      <mx-row>
-        分钟: {{ timeResult.minutes }}
-      </mx-row>
-    </div>
-  </mx-row>
+  <n-card content-style="padding: 0;">
+    <n-tabs type="line" size="large" :tabs-padding="20" pane-style="padding: 20px;">
+      <n-tab-pane name="计算两个时间的时间差">
+        <mx-row class="timecal-horizontal">
+          <div class="timecal-title">当前时间：北京时间 {{ nowTime }}</div>
+        </mx-row>
+        <mx-row class="timecal-horizontal">
+          <div class="timecal-top-title">
+            <n-input-group class="mt-20">
+              开始时间：
+              <n-date-picker v-model:value="time.start" type="datetime" clearable />
+            </n-input-group>
+          </div>
+        </mx-row>
+        <mx-row class="timecal-horizontal">
+          <div class="timecal-b-title">
+            <n-input-group class="mt-20">
+              结束时间：
+              <n-date-picker v-model:value="time.end" type="datetime" clearable />
+            </n-input-group>
+          </div>
+        </mx-row>
+        <n-space vertical class="mt-50 mb-30 pr-40">
+          <n-table :bordered="true" :single-line="false" size="large">
+            <thead>
+              <tr>
+                <th>时间单位</th>
+                <td>年</td>
+                <td>月</td>
+                <td>天</td>
+                <td>时</td>
+                <td>分</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>时间差</th>
+                <td>{{ timeResult.years }}</td>
+                <td>{{ timeResult.months }}</td>
+                <td>{{ timeResult.days }}</td>
+                <td>{{ timeResult.hours }}</td>
+                <td>{{ timeResult.minutes }}</td>
+              </tr>
+            </tbody>
+          </n-table>
+        </n-space>
+      </n-tab-pane>
+      <n-tab-pane name="计算x天后的日期">
+        <mx-row class="timecal-horizontal">
+          <div class="timecal-title">当前时间：北京时间 {{ nowTime }}</div>
+        </mx-row>
+        <mx-row class="timecal-horizontal">
+          <div class="timecal-top-title">
+            <n-input-group class="mt-20">
+              开始时间：
+              <n-date-picker v-model:value="time.nowdata" type="date" clearable/>
+            </n-input-group>
+          </div>
+        </mx-row>
+        <mx-row class="timecal-horizontal">
+          <div class="timecal-top-title">
+            <n-input-group class="mt-20">
+              距离天数：
+              <n-input-number v-model:value="time.dduration" placeholder="请输入整数" min="0" style="width: 200px"  />
+            </n-input-group>
+          </div>
+        </mx-row>
+        <mx-row class="timecal-horizontal">
+          <div class="mt-30 timecal-down-title">
+            经过{{ time.dduration }}天后的日期为: {{moment().add(time.dduration,"days").format('YYYY-MM-DD') }}
+          </div>
+        </mx-row>
+      </n-tab-pane>
+    </n-tabs>
+  </n-card>
+
 </template>
 
 <style scoped lang="scss">
-.title {
+.timecal-title {
   font-size: 35px;
 }
-
-.top-title {
+.timecal-down-title {
+  font-size: 25px;
+}
+.timecal-top-title {
   font-size: large;
-  color: darkcyan;
 }
 
-.b-title {
+.timecal-b-title {
   font-size: large;
-  color: burlywood;
 }
 
-.horizontal {
+.timecal-horizontal {
   display: flex;
   justify-content: space-around;
 }
