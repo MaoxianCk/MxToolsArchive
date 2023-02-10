@@ -6,6 +6,7 @@
       {
         "name": "正则表达式",
         "code": "regex",
+        "author":"",
         "description": "正则测试, 常用正则表达式收集",
         "keyword":["规则"]
       }
@@ -17,6 +18,7 @@
     {
       "name": "时间差计算器",
       "code": "timecal",
+      "author":"",
       "description": "计算两个时间的相差多少（天，时间，分，秒）",
       "keyword":["cal","计算器","时间"]
     }
