@@ -1,9 +1,11 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { doCopy } from '@/utils/copyUtil'
-import { useMessage } from 'naive-ui'
-import { Icon } from '@vicons/utils'
-import { ArrowDropDownOutlined, QuestionMarkOutlined } from '@vicons/material'
+import {ref, computed} from 'vue';
+import {doCopy} from '@/utils/copyUtil'
+import {useMessage} from 'naive-ui'
+import {Icon} from '@vicons/utils'
+import {ArrowDropDownOutlined, QuestionMarkOutlined} from '@vicons/material'
+import MxRow from '@/components/MxRow.vue';
+
 const message = useMessage()
 
 const pattern = computed(() => {
@@ -34,6 +36,10 @@ const changeSuffix = () => {
   input.value.suffix = suffixOptions.value.filter(item => item.checked).map(item => item.value).join('')
 }
 
+const hasError = computed(() => {
+  return testedContent.value === null
+})
+
 const input = ref({
   prefix: '/',
   pattern: '\\d+',
@@ -43,14 +49,18 @@ const input = ref({
 const testedContent = computed(() => {
   const tag = 'span'
   let text = test.value.testContent
-  const regex = new RegExp(input.value.pattern, input.value.suffix);
-  console.log(regex, input.value.pattern, input.value.suffix, regex.exec(text), text.match(regex), text)
-  if (regex.test(text)) {
-    text = text.replace('\n', '<br />');
-    text = text.replace(regex, word => `<${tag} class="regex-highlight">${word}</${tag}>`);
+  try {
+    const regex = new RegExp(input.value.pattern, input.value.suffix);
+    console.log(regex, input.value.pattern, input.value.suffix, regex.exec(text), text.match(regex), text)
+    if (input.value.pattern !== '' && regex.test(text)) {
+      text = text.replace('\n', '<br />');
+      text = text.replace(regex, word => `<${tag} class="regex-highlight">${word}</${tag}>`);
+    }
+    console.log('replaced:', text)
+    return text
+  } catch {
+    return null
   }
-  console.log('replaced:', text)
-  return text
 })
 
 const test = ref({
@@ -68,7 +78,7 @@ const regexTemplates = [
     label: '数字',
     desc: '纯数字',
     pattern: '[0-9]*'
-  },{
+  }, {
     label: 'n位的数字',
     pattern: '[0-9]{n}'
   }
@@ -93,9 +103,12 @@ const regexTemplates = [
             </template>
           </n-button>
         </template>
-        <div v-for="item in suffixOptions" :key="item.value" style="padding: 2px;"><n-checkbox
-          v-model:checked="item.checked"
-          @change="changeSuffix"> {{ item.label }} </n-checkbox></div>
+        <div v-for="item in suffixOptions" :key="item.value" style="padding: 2px;">
+          <n-checkbox
+            v-model:checked="item.checked"
+            @change="changeSuffix"> {{ item.label }}
+          </n-checkbox>
+        </div>
       </n-popover>
     </mx-row>
     <mx-row class="mt-10 preview" align="center">

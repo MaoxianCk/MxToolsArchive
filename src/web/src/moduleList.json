@@ -30,7 +30,7 @@
     "children": [
       {
         "name": "进制转换",
-        "code": "hex-converter",
+        "code": "hexconverter",
         "author":"",
         "description": "支持64以内进制的任意转换",
         "keyword":["cal","计算器","转换"]
