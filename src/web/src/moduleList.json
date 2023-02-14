@@ -23,5 +23,18 @@
       "keyword":["cal","计算器","时间"]
     }
     ]
+  },
+  {
+    "name": "计算器",
+    "code": "Hex converter",
+    "children": [
+    {
+      "name": "进制换算器",
+      "code": "hexconverter",
+      "author":"",
+      "description": "进制转换",
+      "keyword":["cal","计算器","转换"]
+    }
+    ]
   }
 ]
