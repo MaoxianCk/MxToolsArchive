@@ -21,6 +21,11 @@ const router = createRouter({
       component: () => import('@/views/HomeView/index.vue')
     },
 
+    {
+      path: '/test',
+      component: () => import('@/modules/testModule/index.vue')
+    },
+
     moduleRoute,
 
     {

@@ -14,7 +14,7 @@ const props = defineProps({
 <template>
   <n-thing ref="cardRef" class="module-tool-card">
     <template #header>{{ module.name }}</template>
-    <span class="module-tool-card-desc">{{ module.meta.info.description }}</span>
+    <span class="module-tool-card-desc">{{ module.meta.description }}</span>
     <template #header-extra>
       <router-link :to="module.meta.routePath" class="clear-a-style">
         <n-button

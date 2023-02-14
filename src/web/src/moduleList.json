@@ -15,26 +15,26 @@
     "name": "时间工具",
     "code": "time",
     "children": [
-    {
-      "name": "时间差计算器",
-      "code": "timecal",
-      "author":"",
-      "description": "计算两个时间的相差多少（天，时间，分，秒）",
-      "keyword":["cal","计算器","时间"]
-    }
+      {
+        "name": "时间差计算器",
+        "code": "timecal",
+        "author":"",
+        "description": "计算两个时间的相差多少（天，时间，分，秒）",
+        "keyword":["cal","计算器","时间"]
+      }
     ]
   },
   {
-    "name": "计算器",
-    "code": "Hex converter",
+    "name": "进制换算",
+    "code": "converter",
     "children": [
-    {
-      "name": "进制换算器",
-      "code": "hexconverter",
-      "author":"",
-      "description": "进制转换",
-      "keyword":["cal","计算器","转换"]
-    }
+      {
+        "name": "进制转换",
+        "code": "hex-converter",
+        "author":"",
+        "description": "支持64以内进制的任意转换",
+        "keyword":["cal","计算器","转换"]
+      }
     ]
   }
 ]
