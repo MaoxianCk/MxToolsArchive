@@ -7,7 +7,7 @@ import MxGlobalSearch from '@/components/MxGlobalSearch.vue'
   <div class="header-wrapper">
     <!-- 左侧标题logo -->
     <!-- todo hover鼠标特效 -->
-    <RouterLink to="/" class="no-link">
+    <RouterLink to="/index" class="no-link">
       <div class="header-title">
         <div class="header-logo">
           <Icon :size="36">

@@ -49,11 +49,11 @@ const testedContent = computed(() => {
   try {
     const regex = new RegExp(input.value.pattern, input.value.suffix);
     console.log(regex, input.value.pattern, input.value.suffix, regex.exec(text), text.match(regex), text)
+    text = text.replaceAll('\n', '<br />');
     if (input.value.pattern !== '' && regex.test(text)) {
-      text = text.replace('\n', '<br />');
-      text = text.replace(regex, word => `<${tag} class="regex-highlight">${word}</${tag}>`);
+      text = text.replace(regex, word => word === '' ? '' : `<span class="regex-highlight">${word}</span>`);
     }
-    console.log('replaced:', text)
+    // console.log('replaced:', text)
     return text
   } catch {
     return null
@@ -64,7 +64,7 @@ const hasError = computed(() => {
 })
 
 const test = ref({
-  testContent: '123a123b123a123',
+  testContent: '123a123b123a123\n123a123b123a123\n123a123b123a123',
   testedContent: testedContent
 })
 

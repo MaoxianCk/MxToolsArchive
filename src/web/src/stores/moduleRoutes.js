@@ -8,7 +8,7 @@ export const useModuleRouteStore = defineStore('ModuleRoute', () => {
     moduleRoute.value = value
   }
   const setPattern = pattern => {
-    console.log('setPattern', pattern)
+    // console.log('setPattern', pattern)
     filterPattern.value = pattern
   }
   const getFiltered = () => {
