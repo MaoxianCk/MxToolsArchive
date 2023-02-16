@@ -84,18 +84,31 @@ export const createModuleRoutes = (_moduleList, _routePathPrefix) => {
  * 模糊搜索，匹配模块是否符合pattern
  */
 export const calIsShow = (module, pattern) => {
+    if (!pattern) {
+        return true
+    }
+    const patternStr = pattern.trim()
+    if (patternStr === '') {
+        return true
+    }
+    // console.log('calIsShow', module, pattern)
     // 优先匹配短的内容
-    if (module.path.includes(pattern) || module.name.includes(pattern)) {
+    if (module.path.includes(patternStr) || module.name.includes(patternStr)) {
         return true
     }
     // 匹配关键字
     if (module.meta.keyword && Array.isArray(module.meta.keyword)) {
         for (let keyword of module.meta.keyword) {
-            if (keyword.includes(pattern)) {
+            if (keyword.includes(patternStr)) {
                 return true
             }
         }
     }
-    // 最后匹配说明
-    return fuzzyMatch(module.meta.description, pattern)
+    // 匹配作者
+    if (module.meta.author && module.meta.author.includes(patternStr)) {
+        return true
+    }
+    // 最后全文模糊匹配
+    const content = [module.meta.name, module.meta.path, (module.meta.keyword && Array.isArray(module.meta.keyword) ? module.meta.keyword.join(',') : ''), module.meta.description].join(',')
+    return fuzzyMatch(content, patternStr)
 }

@@ -3,7 +3,7 @@ import {ref, computed} from 'vue';
 import {doCopy} from '@/utils/copyUtil'
 import {useMessage} from 'naive-ui'
 import {Icon} from '@vicons/utils'
-import {ArrowDropDownOutlined, QuestionMarkOutlined} from '@vicons/material'
+import {ArrowDropDownOutlined, WarningAmberRound} from '@vicons/material'
 import MxRow from '@/components/MxRow.vue';
 
 const message = useMessage()
@@ -36,9 +36,6 @@ const changeSuffix = () => {
   input.value.suffix = suffixOptions.value.filter(item => item.checked).map(item => item.value).join('')
 }
 
-const hasError = computed(() => {
-  return testedContent.value === null
-})
 
 const input = ref({
   prefix: '/',
@@ -61,6 +58,9 @@ const testedContent = computed(() => {
   } catch {
     return null
   }
+})
+const hasError = computed(() => {
+  return testedContent.value === null
 })
 
 const test = ref({
@@ -110,6 +110,12 @@ const regexTemplates = [
           </n-checkbox>
         </div>
       </n-popover>
+    </mx-row>
+    <mx-row align="center" style="padding: 5px">
+      <span style="display: flex;align-items: center">
+        <icon v-show="hasError" color="#dd4c13" size="1.4em"><WarningAmberRound /></icon>
+        <span v-show="hasError" style="color: darkred">表达式错误</span>
+      </span>
     </mx-row>
     <mx-row class="mt-10 preview" align="center">
       预览: <span class="preview-pattern">{{ pattern }}</span>

@@ -11,7 +11,7 @@ export const fuzzyMatch = (target, pattern) => {
             return true
         }
         const regex = new RegExp(patternStr.replace(/\s+/g, '|'))
-        console.log('fuzzyMatched! ', targetStr, patternStr, regex)
+        // console.log('fuzzyMatched! ', targetStr, patternStr, regex)
         return regex.test(targetStr)
     }
     console.error('target or pattern is not existed')
