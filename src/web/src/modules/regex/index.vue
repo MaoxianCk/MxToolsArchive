@@ -5,6 +5,7 @@ import {useMessage} from 'naive-ui'
 import {Icon} from '@vicons/utils'
 import {ArrowDropDownOutlined, WarningAmberRound} from '@vicons/material'
 import MxRow from '@/components/MxRow.vue';
+import {regexMatchToHtml} from '@/modules/regex/utils';
 
 const message = useMessage()
 
@@ -40,33 +41,14 @@ const changeSuffix = () => {
 const input = ref({
   prefix: '/',
   pattern: '\\d+',
-  suffix: suffixOptions.value.filter(item => item.checked).map(item => item.value).join('')
+  suffix: suffixOptions.value.filter(item => item.checked).map(item => item.value).join(''),
+  testContent: '123a123b123a123\n123a123b123a123\n123a123b123a123'
 })
 
-const testedContent = computed(() => {
-  const tag = 'span'
-  let text = test.value.testContent
-  try {
-    const regex = new RegExp(input.value.pattern, input.value.suffix);
-    console.log(regex, input.value.pattern, input.value.suffix, regex.exec(text), text.match(regex), text)
-    text = text.replaceAll('\n', '<br />');
-    if (input.value.pattern !== '' && regex.test(text)) {
-      text = text.replace(regex, word => word === '' ? '' : `<span class="regex-highlight">${word}</span>`);
-    }
-    // console.log('replaced:', text)
-    return text
-  } catch {
-    return null
-  }
-})
-const hasError = computed(() => {
-  return testedContent.value === null
+const output = computed(() => {
+  return regexMatchToHtml(input.value.testContent, input.value.pattern, input.value.suffix)
 })
 
-const test = ref({
-  testContent: '123a123b123a123\n123a123b123a123\n123a123b123a123',
-  testedContent: testedContent
-})
 
 const handleCopy = () => {
   doCopy(pattern.value, () => message.success('帮你复制好了 !'))
@@ -113,8 +95,8 @@ const regexTemplates = [
     </mx-row>
     <mx-row align="center" style="padding: 5px">
       <span style="display: flex;align-items: center">
-        <icon v-show="hasError" color="#dd4c13" size="1.4em"><WarningAmberRound /></icon>
-        <span v-show="hasError" style="color: darkred">表达式错误</span>
+        <icon v-show="output.hasError" color="#dd4c13" size="1.4em"><WarningAmberRound /></icon>
+        <span v-show="output.hasError" style="color: darkred">表达式错误</span>
       </span>
     </mx-row>
     <mx-row class="mt-10 preview" align="center">
@@ -125,9 +107,12 @@ const regexTemplates = [
     </mx-row>
     <n-divider />
     <div>
-      <n-input v-model:value="test.testContent" type="textarea" placeholder="测试文本" />
+      <n-input v-model:value="input.testContent" type="textarea" placeholder="测试文本" />
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="highlight-box" v-html="test.testedContent" />
+      <div
+        class="highlight-box"
+        style="margin-top: 10px"
+        v-html="output.htmlText" />
     </div>
     <n-divider />
     <div id="regex-template">
@@ -195,6 +180,18 @@ const regexTemplates = [
 }
 </style>
 <style lang="scss">
+.highlight-box {
+  min-height: 56px;
+
+  resize: vertical;
+  overflow: auto;
+
+  outline: none;
+  border: 1px solid rgb(224, 224, 230);
+  border-radius: var(--n-border-radius);
+  padding: 6.5px 12px;
+}
+
 .regex-highlight {
   border-radius: 5px;
 
