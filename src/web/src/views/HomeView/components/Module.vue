@@ -16,11 +16,12 @@ const props = defineProps({
     <template #header>{{ module.name }}</template>
     <span class="module-tool-card-desc">{{ module.meta.description }}</span>
     <template #header-extra>
-      <router-link :to="module.meta.routePath" class="clear-a-style">
+      <router-link :to="module.meta.routePath" class="mx-clear-a-style">
         <n-button
           type="primary"
           size="tiny"
-          round>Go</n-button></router-link>
+          round>Go</n-button>
+      </router-link>
     </template>
   </n-thing>
 </template>

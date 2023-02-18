@@ -117,7 +117,7 @@ const handleCopy = (text) => {
           <template v-if="item.desc">
             <n-tooltip trigger="hover">
               <template #trigger>
-                <div>
+                <div class="mx-flex-center">
                   <span class="template-item-label">
                     {{ item.label }}:
                   </span>
@@ -128,10 +128,12 @@ const handleCopy = (text) => {
             </n-tooltip>
           </template>
           <template v-else>
-            <span class="template-item-label">
-              {{ item.label }}:
-            </span>
-            <span class="template-item-pattern" @click="handleCopy(item.pattern)">{{ item.pattern }}</span>
+            <div class="mx-flex-center">
+              <span class="template-item-label">
+                {{ item.label }}:
+              </span>
+              <span class="template-item-pattern" @click="handleCopy(item.pattern)">{{ item.pattern }}</span>
+            </div>
           </template>
         </div>
       </mx-row>
