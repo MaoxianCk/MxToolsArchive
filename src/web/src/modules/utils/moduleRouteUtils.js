@@ -91,7 +91,7 @@ export const calIsShow = (module, pattern) => {
     if (patternStr === '') {
         return true
     }
-    // console.log('calIsShow', module, pattern)
+    console.log('calIsShow', module, pattern)
     // 优先匹配短的内容
     if (module.path.includes(patternStr) || module.name.includes(patternStr)) {
         return true
