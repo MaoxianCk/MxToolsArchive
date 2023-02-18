@@ -6,6 +6,8 @@ import {Icon} from '@vicons/utils'
 import {ArrowDropDownOutlined, WarningAmberRound} from '@vicons/material'
 import MxRow from '@/components/MxRow.vue';
 import {regexMatchToHtml} from '@/modules/regex/utils';
+import regexTemplates from './regexTemplates.json'
+import 'animate.css'
 
 const message = useMessage()
 
@@ -40,9 +42,9 @@ const changeSuffix = () => {
 
 const input = ref({
   prefix: '/',
-  pattern: '\\d+',
+  pattern: '',
   suffix: suffixOptions.value.filter(item => item.checked).map(item => item.value).join(''),
-  testContent: '123a123b123a123\n123a123b123a123\n123a123b123a123'
+  testContent: ''
 })
 
 const output = computed(() => {
@@ -50,21 +52,10 @@ const output = computed(() => {
 })
 
 
-const handleCopy = () => {
-  doCopy(pattern.value, () => message.success('帮你复制好了 !'))
+const handleCopy = (text) => {
+  doCopy(text, () => message.success('帮你复制好了 !'))
 }
 
-// regex template
-const regexTemplates = [
-  {
-    label: '数字',
-    desc: '纯数字',
-    pattern: '[0-9]*'
-  }, {
-    label: 'n位的数字',
-    pattern: '[0-9]{n}'
-  }
-]
 </script>
 
 <template>
@@ -75,6 +66,9 @@ const regexTemplates = [
         <n-input v-model:value="input.pattern" placeholder="输入正则表达式" />
         <n-input-group-label>/{{ input.suffix }}</n-input-group-label>
       </n-input-group>
+      <n-button @click="handleCopy(input.pattern)">
+        复制
+      </n-button>
       <n-popover trigger="click" placement="bottom-end">
         <template #trigger>
           <n-button icon-placement="right">修饰符
@@ -95,19 +89,13 @@ const regexTemplates = [
     </mx-row>
     <mx-row align="center" style="padding: 5px">
       <span style="display: flex;align-items: center">
-        <icon v-show="output.hasError" color="#dd4c13" size="1.4em"><WarningAmberRound /></icon>
-        <span v-show="output.hasError" style="color: darkred">表达式错误</span>
+        <icon v-show="input.pattern!=='' && output.hasError" color="#dd4c13" size="1.4em"><WarningAmberRound /></icon>
+        <span v-show="input.pattern!=='' && output.hasError" style="color: darkred">表达式错误</span>
       </span>
-    </mx-row>
-    <mx-row class="mt-10 preview" align="center">
-      预览: <span class="preview-pattern">{{ pattern }}</span>
-      <n-button size="small" @click="handleCopy">
-        复制
-      </n-button>
     </mx-row>
     <n-divider />
     <div>
-      <n-input v-model:value="input.testContent" type="textarea" placeholder="测试文本" />
+      <n-input v-model:value="input.testContent" type="textarea" placeholder="这里写测试文本" />
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div
         class="highlight-box"
@@ -117,30 +105,35 @@ const regexTemplates = [
     <n-divider />
     <div id="regex-template">
       <div class="tool-sub-title">我觉得常用的表达式</div>
+      <!-- pattern: 正则 -->
+      <!-- desc: 说明 -->
+      <!-- label: 标题 -->
       <mx-row
         v-for="item of regexTemplates"
         :key="item.pattern"
-        class="mt-10 template-item"
+        class="mt-10"
         align="center">
-        <template v-if="item.desc">
-          <n-tooltip trigger="hover">
-            <template #trigger>
-              <div>
-                <span class="template-item-label">
-                  *{{ item.label }}:
-                </span>
-                <span class="template-item-pattern">{{ item.pattern }}</span>
-              </div>
-            </template>
-            {{ item.desc }}
-          </n-tooltip>
-        </template>
-        <template v-else>
-          <span class="template-item-label">
-            {{ item.label }}:
-          </span>
-          <span class="template-item-pattern">{{ item.pattern }}</span>
-        </template>
+        <div class="template-item">
+          <template v-if="item.desc">
+            <n-tooltip trigger="hover">
+              <template #trigger>
+                <div>
+                  <span class="template-item-label">
+                    {{ item.label }}:
+                  </span>
+                  <span class="template-item-pattern" @click="handleCopy(item.pattern)">{{ item.pattern }}</span>
+                </div>
+              </template>
+              {{ item.desc }}
+            </n-tooltip>
+          </template>
+          <template v-else>
+            <span class="template-item-label">
+              {{ item.label }}:
+            </span>
+            <span class="template-item-pattern" @click="handleCopy(item.pattern)">{{ item.pattern }}</span>
+          </template>
+        </div>
       </mx-row>
     </div>
   </div>
@@ -165,6 +158,14 @@ const regexTemplates = [
 #regex-template {
   .template-item {
     text-align: center;
+    border-bottom: 1px solid transparent;
+    border-image: none;
+    transition: all .3s linear;
+
+    &:hover {
+      border-bottom: 1px solid var(--main-color);
+      //border-image: linear-gradient(90deg, white 5%, var(--main-color) 50%, white 95%) 1;
+    }
 
     .template-item-label {
       font-size: 16px;
@@ -173,8 +174,10 @@ const regexTemplates = [
 
     .template-item-pattern {
       font-size: 15px;
-      font-family: 'Courier New';
+      font-family: 'Courier New', serif;
       font-weight: bold;
+
+      cursor: pointer;
     }
   }
 }
