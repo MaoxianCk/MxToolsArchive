@@ -1,13 +1,13 @@
 <script setup>
-import {RouterView, useRoute} from 'vue-router'
+import {RouterView} from 'vue-router'
 import MxHeader from '@/components/MxHeader.vue'
 import {zhCN, dateZhCN} from 'naive-ui'
 import 'animate.css'
-
+import {themeOverrides} from '@/themeOverrides';
 </script>
 
 <template>
-  <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
+  <n-config-provider :locale="zhCN" :date-locale="dateZhCN" :theme-overrides="themeOverrides">
     <n-message-provider>
       <n-layout class="wrapper">
         <n-layout-header>
@@ -31,6 +31,7 @@ import 'animate.css'
 .wrapper {
   width: 100%;
 }
+
 .slide-fade-enter-active {
   transition: all .25s ease-out;
 }

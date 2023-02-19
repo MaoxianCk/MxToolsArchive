@@ -1,10 +1,15 @@
 @import './base.css';
-@import '@/assets/fonts/smiley-sans.css';
+@import './fonts/smiley-sans.css';
 @import './margin.scss';
 @import './padding.scss';
 @import './module.scss';
 
-.clear-a-style {
+.mx-clear-a-style {
   text-decoration: none;
   color: #000;
+}
+
+.mx-flex-center {
+  display: flex;
+  align-items: center;
 }

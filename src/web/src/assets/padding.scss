@@ -1,4 +1,4 @@
-@for $i from (5 / 5) through (100 / 5) {
+@for $i from calc(5 / 5) through calc(100 / 5) {
   $val: $i * 5;
   .pl-#{$val} {
     padding-left: #{$val}px;

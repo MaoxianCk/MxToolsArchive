@@ -7,7 +7,7 @@ import Module from './components/Module.vue'
 
 const moduleRouteStore = useModuleRouteStore()
 
-const moduleRoute = moduleRouteStore.getFiltered()
+const moduleRoute = moduleRouteStore.moduleRoute
 const { filterPattern } = storeToRefs(moduleRouteStore)
 
 const isShow = computed(() => module => {
