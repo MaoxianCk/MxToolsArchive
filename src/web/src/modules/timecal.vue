@@ -143,7 +143,7 @@ const timeResult = computed(() => {
         </mx-row>
         <mx-row class="timecal-horizontal">
           <div class="mt-30 timecal-title">
-            {{ Math.abs(time.dduration) }} 天{{( time.dduration>0 ? '后':'前')}}的日期为: {{moment().add(time.dduration,"days").format('YYYY-MM-DD') }}
+            {{ Math.abs(time.dduration) }} 天{{( time.dduration>0 ? '后':'前')}}的日期为: {{moment(time.nowdata).add(time.dduration,"days").format('YYYY-MM-DD') }}
           </div>
         </mx-row>
       </n-tab-pane>

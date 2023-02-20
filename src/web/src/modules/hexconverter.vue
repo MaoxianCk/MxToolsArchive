@@ -1,8 +1,9 @@
 <script setup>
 import { defineComponent, ref, computed } from 'vue'
-import { Icon } from '@vicons/utils'
-import { ArrowDropDownOutlined } from '@vicons/material'
+import { doCopy } from '@/utils/copyUtil'
+import { useMessage } from 'naive-ui'
 
+const message = useMessage()
 const convert = (base, num, tobase) => {
     //如果是number类型就将其转化为字符串
     if (typeof (num) === "number") {
@@ -53,29 +54,28 @@ const HexOptions = ref([
     }
 ])
 const inputScale = ref(2)
-const outputScale = ref(10)
-const ipnumber = ref(111)
-const ipother = ref(3)
-const opother = ref(3)
-const opnumber = computed(() => {
-    console.log(666666666666, inputScale.value)
-    console.log(99999, ipnumber.value != '')
+const ipNumber = ref(111)
+const ipOtherScale = ref(3)
+const opOtherScale = ref(3)
+const opNumber = computed(() => {
+    // console.log(666666666666, inputScale.value)
+    // console.log(99999, ipNumber.value != '')
     return inputScale.value != 'on' ? {
-        two: convert(inputScale.value, ipnumber.value, 2),
-        four: convert(inputScale.value, ipnumber.value, 4),
-        eight: convert(inputScale.value, ipnumber.value, 8),
-        ten: convert(inputScale.value, ipnumber.value, 10),
-        sixteen: convert(inputScale.value, ipnumber.value, 16),
-        thirty2: convert(inputScale.value, ipnumber.value, 32),
-        out: convert(inputScale.value, ipnumber.value, opother.value)
+        two: convert(inputScale.value, ipNumber.value, 2),
+        four: convert(inputScale.value, ipNumber.value, 4),
+        eight: convert(inputScale.value, ipNumber.value, 8),
+        ten: convert(inputScale.value, ipNumber.value, 10),
+        sixteen: convert(inputScale.value, ipNumber.value, 16),
+        thirty2: convert(inputScale.value, ipNumber.value, 32),
+        out: convert(inputScale.value, ipNumber.value, opOtherScale.value)
     } : ipother.value ? {
-        two: convert(ipother.value, ipnumber.value, 2),
-        four: convert(ipother.value, ipnumber.value, 4),
-        eight: convert(ipother.value, ipnumber.value, 8),
-        ten: convert(ipother.value, ipnumber.value, 10),
-        sixteen: convert(ipother.value, ipnumber.value, 16),
-        thirty2: convert(ipother.value, ipnumber.value, 32),
-        out: convert(ipother.value, ipnumber.value, opother.value)
+        two: convert(ipOtherScale.value, ipNumber.value, 2),
+        four: convert(ipOtherScale.value, ipNumber.value, 4),
+        eight: convert(ipOtherScale.value, ipNumber.value, 8),
+        ten: convert(ipOtherScale.value, ipNumber.value, 10),
+        sixteen: convert(ipOtherScale.value, ipNumber.value, 16),
+        thirty2: convert(ipOtherScale.value, ipNumber.value, 32),
+        out: convert(ipOtherScale.value, ipNumber.value, opOtherScale.value)
     } : {
         two: 0,
         four: 0,
@@ -86,7 +86,14 @@ const opnumber = computed(() => {
         out: 0
     }
 })
-
+const handleCopy = (text) => {
+    if (text!=="NaN") {
+        doCopy(JSON.parse(text), () => message.success('帮你复制好了 !'))
+    }
+    else {
+        message.error('你复制了个寂寞')
+    }
+}
 </script>
 
 <template>
@@ -106,9 +113,9 @@ const opnumber = computed(() => {
         </n-radio-group>
     </n-space>
     <div class="hex-inputS">
-        <div :style="{ width: '42%' }" v-if="inputScale == 'on'"><n-input-number v-model:value="ipother"
+        <div :style="{ width: '42%' }" v-if="inputScale === 'on'"><n-input-number v-model:value="ipOtherScale"
                 :style="{ width: '100%' }" min="2" max="32" placeholder="请输入2-32以内的待转换数的进制" clearable /></div>
-        <div :style="{ width: '42%' }" v-else><n-input-number v-model:value="ipother" placeholder="等待中..."
+        <div :style="{ width: '42%' }" v-else><n-input-number v-model:value="ipOtherScale" placeholder="等待中..."
                 :style="{ width: '100%' }" disabled />
         </div>
     </div>
@@ -116,7 +123,7 @@ const opnumber = computed(() => {
     <div class="mt-20  hex-input">
         <n-input-group>
             <n-input-group-label>转换数字</n-input-group-label>
-            <n-input :style="{ width: '52%' }" v-model:value="ipnumber" placeholder="请输入转换数字" clearable />
+            <n-input :style="{ width: '52%' }" v-model:value="ipNumber" placeholder="请输入转换数字" clearable />
         </n-input-group>
     </div>
     <n-divider />
@@ -133,9 +140,9 @@ const opnumber = computed(() => {
                 <tr>
                     <td>2</td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.two" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.two" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.two)" class="ml-10">
                             复制
                         </n-button>
                     </td>
@@ -143,9 +150,9 @@ const opnumber = computed(() => {
                 <tr>
                     <th>4</th>
                     <th>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.four" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.four" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.four)" class="ml-10">
                             复制
                         </n-button>
                     </th>
@@ -153,9 +160,9 @@ const opnumber = computed(() => {
                 <tr>
                     <td>8</td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.eight" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.eight" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.eight)" class="ml-10">
                             复制
                         </n-button>
                     </td>
@@ -163,9 +170,9 @@ const opnumber = computed(() => {
                 <tr>
                     <th>10</th>
                     <th>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.ten" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.ten" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.ten)" class="ml-10">
                             复制
                         </n-button>
                     </th>
@@ -173,9 +180,9 @@ const opnumber = computed(() => {
                 <tr>
                     <td>16</td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.sixteen" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.sixteen" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.sixteen)" class="ml-10">
                             复制
                         </n-button>
                     </td>
@@ -183,9 +190,9 @@ const opnumber = computed(() => {
                 <tr>
                     <th>32</th>
                     <th>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.thirty2" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.thirty2" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.thirty2)" class="ml-10">
                             复制
                         </n-button>
                     </th>
@@ -204,30 +211,13 @@ const opnumber = computed(() => {
             <tbody>
                 <tr>
                     <td :style="{ width: '17%' }">
-                        选择输出进制
-                        <n-popover trigger="click" placement="top-end">
-                            <template #trigger>
-                                <n-button icon-placement="right">{{opother}}
-                                    <template #icon>
-                                        <Icon>
-                                            <ArrowDropDownOutlined />
-                                        </Icon>
-                                    </template>
-                                </n-button>
-                            </template>
-                            <n-radio-group v-model:value="opother" name="radiogroup" >
-                                <n-space  v-for="index of 31" :key="index">
-                                    <n-radio  :value="index">
-                                        <div>{{ index+1 }}</div>
-                                    </n-radio>
-                                </n-space>
-                            </n-radio-group>
-                        </n-popover>
+                        输出进制
+                        <n-input-number v-model:value="opOtherScale" min="2" max="32" />
                     </td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opnumber.out" placeholder="转换结果"
+                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.out" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.out)" class="ml-10">
                             复制
                         </n-button>
                     </td>
@@ -248,7 +238,6 @@ const opnumber = computed(() => {
 
 .hex-output {
     background-color: white;
-    color: black;
 }
 
 .hex-iptable {
