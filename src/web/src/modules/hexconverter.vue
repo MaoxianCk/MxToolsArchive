@@ -98,7 +98,7 @@ const handleCopy = (text) => {
 
 <template>
     <div class="hex-title  mt-20 mb-10">请选择待转换数的进制:</div>
-    <n-space class="hex-inputS">
+    <n-space>
         <n-radio-group v-model:value="inputScale" name="radiogroup">
             <n-space>
                 <n-radio v-for="hex in HexOptions.slice(0, -1)" :key="hex.value" :value="hex.value">
@@ -112,7 +112,7 @@ const handleCopy = (text) => {
             </n-space>
         </n-radio-group>
     </n-space>
-    <div class="hex-inputS">
+    <div>
         <div :style="{ width: '200px' }" v-if="inputScale === 'on'"><n-input-number v-model:value="ipOtherScale"
                 :style="{ width: '100%' }" min="2" max="32" placeholder="请输入2-32以内进制" clearable /></div>
         <div :style="{ width: '200px' }" v-else><n-input-number v-model:value="ipOtherScale" placeholder="等待中..."
@@ -128,12 +128,13 @@ const handleCopy = (text) => {
     <n-divider />
     <div class="hex-title mt-20 mb-10">常用的进制转换:</div>
     <div class="mb-20  hex-title">
-        <n-table :single-line="true" :style="{ width: '800px' }" striped>
+        <n-table :single-line="false" :style="{ width: '800px' }" striped>
             <thead >
-                <tr :single-line="true">
+                <tr>
                     <th>进制</th>
                     <th>输出结果</th>
-                    <th></th> <th></th>
+                    <th>进制</th> 
+                    <th>输出结果</th>
                 </tr>
             </thead>
             <tbody>
@@ -194,7 +195,7 @@ const handleCopy = (text) => {
             </tbody>
         </n-table>
         <n-divider />
-        <div class="hex-title">任意进制转换:</div>
+        <div class="hex-title mb-10">任意进制转换:</div>
         <n-table :single-line="false" :style="{ width: '800px' }">
             <thead>
                 <tr>
@@ -206,7 +207,7 @@ const handleCopy = (text) => {
                 <tr>
                     <td>
                         输出进制
-                        <n-input-number v-model:value="opOtherScale" min="2" max="32" :style="{ width: '100px' }"/>
+                        <n-input-number v-model:value="opOtherScale" min="2" max="32" :style="{ width: '250px' }"/>
                     </td>
                     <td>
                         <n-input :style="{ width: '400px' }" v-model:value="opNumber.out" placeholder="转换结果"
@@ -223,9 +224,6 @@ const handleCopy = (text) => {
 
 <style scoped lang="scss">
 
-.hex-inputS {
- margin-left: 50px;
-}
 
 .hex-output {
     background-color: white;
