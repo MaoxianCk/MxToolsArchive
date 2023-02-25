@@ -210,9 +210,9 @@ const handleCopy = (text) => {
                         <n-input-number v-model:value="opOtherScale" min="2" max="32" :style="{ width: '250px' }"/>
                     </td>
                     <td>
-                        <n-input :style="{ width: '400px' }" v-model:value="opNumber.out" placeholder="转换结果"
+                        <n-input :style="{ width: '348px' }" v-model:value="opNumber.out" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy(opNumber.out)" class="ml-20">
+                        <n-button size="small" @click="handleCopy(opNumber.out)" class="ml-10">
                             复制
                         </n-button>
                     </td>
@@ -232,7 +232,6 @@ const handleCopy = (text) => {
 .hex-iptable {
  padding-right: 200px;
 }
-
 .hex-title {
     font-size: var(--n-title-font-size)
 }
