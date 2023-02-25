@@ -57,25 +57,31 @@ const inputScale = ref(2)
 const ipNumber = ref(111)
 const ipOtherScale = ref(3)
 const opOtherScale = ref(3)
+const mConvert = (scale) => {
+    return convert(inputScale.value, ipNumber.value, scale)
+}
+const oConvert = (scale) => {
+    return convert(ipOtherScale.value, ipNumber.value, scale)
+}
 const opNumber = computed(() => {
     // console.log(666666666666, inputScale.value)
     // console.log(99999, ipNumber.value != '')
     return inputScale.value != 'on' ? {
-        two: convert(inputScale.value, ipNumber.value, 2),
-        four: convert(inputScale.value, ipNumber.value, 4),
-        eight: convert(inputScale.value, ipNumber.value, 8),
-        ten: convert(inputScale.value, ipNumber.value, 10),
-        sixteen: convert(inputScale.value, ipNumber.value, 16),
-        thirty2: convert(inputScale.value, ipNumber.value, 32),
-        out: convert(inputScale.value, ipNumber.value, opOtherScale.value)
-    } : ipother.value ? {
-        two: convert(ipOtherScale.value, ipNumber.value, 2),
-        four: convert(ipOtherScale.value, ipNumber.value, 4),
-        eight: convert(ipOtherScale.value, ipNumber.value, 8),
-        ten: convert(ipOtherScale.value, ipNumber.value, 10),
-        sixteen: convert(ipOtherScale.value, ipNumber.value, 16),
-        thirty2: convert(ipOtherScale.value, ipNumber.value, 32),
-        out: convert(ipOtherScale.value, ipNumber.value, opOtherScale.value)
+        two: mConvert(2),
+        four: mConvert(4),
+        eight: mConvert(8),
+        ten: mConvert(10),
+        sixteen: mConvert(16),
+        thirty2: mConvert(32),
+        out: mConvert(opOtherScale.value)
+    } : ipOtherScale.value ? {
+        two: oConvert(2),
+        four: oConvert(4),
+        eight: oConvert(8),
+        ten: oConvert(10),
+        sixteen: oConvert(16),
+        thirty2: oConvert(32),
+        out: oConvert(opOtherScale.value)
     } : {
         two: 0,
         four: 0,
@@ -87,8 +93,8 @@ const opNumber = computed(() => {
     }
 })
 const handleCopy = (text) => {
-    if (text!=="NaN") {
-        doCopy(JSON.parse(text), () => message.success('帮你复制好了 !'))
+    if (text !== "NaN") {
+        doCopy(text, () => message.success('帮你复制好了 !'))
     }
     else {
         message.error('你复制了个寂寞')
@@ -129,11 +135,11 @@ const handleCopy = (text) => {
     <div class="hex-title mt-20 mb-10">常用的进制转换:</div>
     <div class="mb-20  hex-title">
         <n-table :single-line="false" :style="{ width: '800px' }" striped>
-            <thead >
+            <thead>
                 <tr>
                     <th>进制</th>
                     <th>输出结果</th>
-                    <th>进制</th> 
+                    <th>进制</th>
                     <th>输出结果</th>
                 </tr>
             </thead>
@@ -207,7 +213,7 @@ const handleCopy = (text) => {
                 <tr>
                     <td>
                         输出进制
-                        <n-input-number v-model:value="opOtherScale" min="2" max="32" :style="{ width: '250px' }"/>
+                        <n-input-number v-model:value="opOtherScale" min="2" max="32" :style="{ width: '250px' }" />
                     </td>
                     <td>
                         <n-input :style="{ width: '353px' }" v-model:value="opNumber.out" placeholder="转换结果"
@@ -223,15 +229,14 @@ const handleCopy = (text) => {
 </template>
 
 <style scoped lang="scss">
-
-
 .hex-output {
     background-color: white;
 }
 
 .hex-iptable {
- padding-right: 200px;
+    padding-right: 200px;
 }
+
 .hex-title {
     font-size: var(--n-title-font-size)
 }
