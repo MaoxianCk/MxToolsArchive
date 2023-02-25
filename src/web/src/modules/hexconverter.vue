@@ -97,8 +97,8 @@ const handleCopy = (text) => {
 </script>
 
 <template>
-    <div class="hex-title  hex-input mt-20 mb-10">请选择待转换数的进制:</div>
-    <n-space justify="space-around">
+    <div class="hex-title  mt-20 mb-10">请选择待转换数的进制:</div>
+    <n-space class="hex-inputS">
         <n-radio-group v-model:value="inputScale" name="radiogroup">
             <n-space>
                 <n-radio v-for="hex in HexOptions.slice(0, -1)" :key="hex.value" :value="hex.value">
@@ -113,74 +113,60 @@ const handleCopy = (text) => {
         </n-radio-group>
     </n-space>
     <div class="hex-inputS">
-        <div :style="{ width: '42%' }" v-if="inputScale === 'on'"><n-input-number v-model:value="ipOtherScale"
-                :style="{ width: '100%' }" min="2" max="32" placeholder="请输入2-32以内的待转换数的进制" clearable /></div>
-        <div :style="{ width: '42%' }" v-else><n-input-number v-model:value="ipOtherScale" placeholder="等待中..."
+        <div :style="{ width: '200px' }" v-if="inputScale === 'on'"><n-input-number v-model:value="ipOtherScale"
+                :style="{ width: '100%' }" min="2" max="32" placeholder="请输入2-32以内进制" clearable /></div>
+        <div :style="{ width: '200px' }" v-else><n-input-number v-model:value="ipOtherScale" placeholder="等待中..."
                 :style="{ width: '100%' }" disabled />
         </div>
     </div>
-    <n-divider dashed />
-    <div class="mt-20  hex-input">
+    <div class="mt-20">
         <n-input-group>
             <n-input-group-label>转换数字</n-input-group-label>
-            <n-input :style="{ width: '52%' }" v-model:value="ipNumber" placeholder="请输入转换数字" clearable />
+            <n-input :style="{ width: '300px' }" v-model:value="ipNumber" placeholder="请输入转换数字" clearable />
         </n-input-group>
     </div>
     <n-divider />
-    <div class="hex-title  hex-input mt-20 mb-10">常用的进制转换:</div>
-    <div class="mb-20 hex-iptable hex-title">
-        <n-table :single-line="false">
-            <thead>
-                <tr>
+    <div class="hex-title mt-20 mb-10">常用的进制转换:</div>
+    <div class="mb-20  hex-title">
+        <n-table :single-line="true" :style="{ width: '800px' }" striped>
+            <thead >
+                <tr :single-line="true">
                     <th>进制</th>
                     <th>输出结果</th>
+                    <th></th> <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>2</td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.two" placeholder="转换结果"
+                        <n-input :style="{ width: '200px' }" v-model:value="opNumber.two" placeholder="转换结果"
                             class="hex-output" disabled />
                         <n-button size="small" @click="handleCopy(opNumber.two)" class="ml-10">
                             复制
                         </n-button>
                     </td>
-                </tr>
-                <tr>
-                    <th>4</th>
-                    <th>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.four" placeholder="转换结果"
-                            class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy(opNumber.four)" class="ml-10">
-                            复制
-                        </n-button>
-                    </th>
-                </tr>
-                <tr>
-                    <td>8</td>
+                    <td>10</td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.eight" placeholder="转换结果"
+                        <n-input :style="{ width: '200px' }" v-model:value="opNumber.ten" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy(opNumber.eight)" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.ten)" class="ml-10">
                             复制
                         </n-button>
                     </td>
                 </tr>
                 <tr>
-                    <th>10</th>
-                    <th>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.ten" placeholder="转换结果"
+                    <td>4</td>
+                    <td>
+                        <n-input :style="{ width: '200px' }" v-model:value="opNumber.four" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy(opNumber.ten)" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.four)" class="ml-10">
                             复制
                         </n-button>
-                    </th>
-                </tr>
-                <tr>
+                    </td>
                     <td>16</td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.sixteen" placeholder="转换结果"
+                        <n-input :style="{ width: '200px' }" v-model:value="opNumber.sixteen" placeholder="转换结果"
                             class="hex-output" disabled />
                         <n-button size="small" @click="handleCopy(opNumber.sixteen)" class="ml-10">
                             复制
@@ -188,20 +174,28 @@ const handleCopy = (text) => {
                     </td>
                 </tr>
                 <tr>
-                    <th>32</th>
-                    <th>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.thirty2" placeholder="转换结果"
+                    <td>8</td>
+                    <td>
+                        <n-input :style="{ width: '200px' }" v-model:value="opNumber.eight" placeholder="转换结果"
+                            class="hex-output" disabled />
+                        <n-button size="small" @click="handleCopy(opNumber.eight)" class="ml-10">
+                            复制
+                        </n-button>
+                    </td>
+                    <td>32</td>
+                    <td>
+                        <n-input :style="{ width: '200px' }" v-model:value="opNumber.thirty2" placeholder="转换结果"
                             class="hex-output" disabled />
                         <n-button size="small" @click="handleCopy(opNumber.thirty2)" class="ml-10">
                             复制
                         </n-button>
-                    </th>
+                    </td>
                 </tr>
             </tbody>
         </n-table>
         <n-divider />
         <div class="hex-title">任意进制转换:</div>
-        <n-table :single-line="false">
+        <n-table :single-line="false" :style="{ width: '800px' }">
             <thead>
                 <tr>
                     <th>进制</th>
@@ -210,14 +204,14 @@ const handleCopy = (text) => {
             </thead>
             <tbody>
                 <tr>
-                    <td :style="{ width: '17%' }">
+                    <td>
                         输出进制
-                        <n-input-number v-model:value="opOtherScale" min="2" max="32" />
+                        <n-input-number v-model:value="opOtherScale" min="2" max="32" :style="{ width: '100px' }"/>
                     </td>
                     <td>
-                        <n-input :style="{ width: '90%' }" v-model:value="opNumber.out" placeholder="转换结果"
+                        <n-input :style="{ width: '400px' }" v-model:value="opNumber.out" placeholder="转换结果"
                             class="hex-output" disabled />
-                        <n-button size="small" @click="handleCopy(opNumber.out)" class="ml-10">
+                        <n-button size="small" @click="handleCopy(opNumber.out)" class="ml-20">
                             复制
                         </n-button>
                     </td>
@@ -228,12 +222,9 @@ const handleCopy = (text) => {
 </template>
 
 <style scoped lang="scss">
-.hex-input {
-    margin-left: 15%;
-}
 
 .hex-inputS {
-    margin-left: 26%;
+ margin-left: 50px;
 }
 
 .hex-output {
@@ -241,8 +232,7 @@ const handleCopy = (text) => {
 }
 
 .hex-iptable {
-    padding-right: 15%;
-    padding-left: 15%;
+ padding-right: 200px;
 }
 
 .hex-title {
