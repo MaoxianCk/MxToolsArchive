@@ -54,9 +54,9 @@ const HexOptions = ref([
     }
 ])
 const inputScale = ref(2)
-const ipNumber = ref(111)
+const ipNumber = ref(null)
 const ipOtherScale = ref(3)
-const opOtherScale = ref(3)
+const opOtherScale = ref(10)
 const mConvert = (scale) => {
     return convert(inputScale.value, ipNumber.value, scale)
 }
@@ -64,33 +64,42 @@ const oConvert = (scale) => {
     return convert(ipOtherScale.value, ipNumber.value, scale)
 }
 const opNumber = computed(() => {
-    // console.log(666666666666, inputScale.value)
-    // console.log(99999, ipNumber.value != '')
-    return inputScale.value != 'on' ? {
-        two: mConvert(2),
-        four: mConvert(4),
-        eight: mConvert(8),
-        ten: mConvert(10),
-        sixteen: mConvert(16),
-        thirty2: mConvert(32),
-        out: mConvert(opOtherScale.value)
-    } : ipOtherScale.value ? {
-        two: oConvert(2),
-        four: oConvert(4),
-        eight: oConvert(8),
-        ten: oConvert(10),
-        sixteen: oConvert(16),
-        thirty2: oConvert(32),
-        out: oConvert(opOtherScale.value)
-    } : {
-        two: 0,
-        four: 0,
-        eight: 0,
-        ten: 0,
-        sixteen: 0,
-        thirty2: 0,
-        out: 0
-    }
+    //输入数字是否为空
+    return !ipNumber.value || ipNumber.value === '-' ? {
+        two: null,
+        four: null,
+        eight: null,
+        ten: null,
+        sixteen: null,
+        thirty2: null,
+        out: null
+    }//是否自定义进制 
+        : inputScale.value != 'on' ? {
+            two: mConvert(2),
+            four: mConvert(4),
+            eight: mConvert(8),
+            ten: mConvert(10),
+            sixteen: mConvert(16),
+            thirty2: mConvert(32),
+            out: mConvert(opOtherScale.value)
+        }//自定义进制是否为空 
+            : ipOtherScale.value ? {
+                two: oConvert(2),
+                four: oConvert(4),
+                eight: oConvert(8),
+                ten: oConvert(10),
+                sixteen: oConvert(16),
+                thirty2: oConvert(32),
+                out: oConvert(opOtherScale.value)
+            } : {
+                two: null,
+                four: null,
+                eight: null,
+                ten: null,
+                sixteen: null,
+                thirty2: null,
+                out: null
+            }
 })
 const handleCopy = (text) => {
     if (text !== "NaN") {
@@ -100,12 +109,36 @@ const handleCopy = (text) => {
         message.error('你复制了个寂寞')
     }
 }
+//输入框不允许有空格
+// const noSpace = (value) =>!value || /^\S+$/.test(value) 
+const reg = (value) => {
+    let scale
+    if (inputScale.value !== 'on') {
+        scale = convert(10, (inputScale.value - 1), 32)
+    }
+    else {
+        scale = convert(10, (ipOtherScale.value - 1), 32)////////////
+    }
+    let re = `[0-${scale}]`
+    // console.log('666', eval(`/^-?\\b${re}*\\b$/.test(value)`))
+    // console.log('re', re, 'scale', scale)
+    return !value || eval(`/^-?${re}*$/.test(value)`)
+}
+
+//点击单选框与自定义进制时重置输入
+const reset = () => {
+    ipNumber.value = null
+    //输入自定义进制与单选框联动
+    if (inputScale.value !== 'on') {
+        ipOtherScale.value = inputScale.value
+    }
+}
 </script>
 
 <template>
     <div class="hex-title  mt-20 mb-10">请选择待转换数的进制:</div>
     <n-space>
-        <n-radio-group v-model:value="inputScale" name="radiogroup">
+        <n-radio-group v-model:value="inputScale" name="radiogroup" @click="reset">
             <n-space>
                 <n-radio v-for="hex in HexOptions.slice(0, -1)" :key="hex.value" :value="hex.value">
                     <div>{{ hex.label }}</div>
@@ -120,15 +153,17 @@ const handleCopy = (text) => {
     </n-space>
     <div>
         <div :style="{ width: '200px' }" v-if="inputScale === 'on'"><n-input-number v-model:value="ipOtherScale"
-                :style="{ width: '100%' }" min="2" max="32" placeholder="请输入2-32以内进制" clearable /></div>
-        <div :style="{ width: '200px' }" v-else><n-input-number v-model:value="ipOtherScale" placeholder="等待中..."
+                :style="{ width: '100%' }" min="2" max="32" placeholder="请输入2-32以内进制" @update:value="reset" clearable />
+        </div>
+        <div :style="{ width: '200px' }" v-else><n-input-number v-model:value="inputScale" placeholder="等待中..."
                 :style="{ width: '100%' }" disabled />
         </div>
     </div>
     <div class="mt-20">
         <n-input-group>
             <n-input-group-label>转换数字</n-input-group-label>
-            <n-input :style="{ width: '300px' }" v-model:value="ipNumber" placeholder="请输入转换数字" clearable />
+            <n-input :style="{ width: '300px' }" v-model:value="ipNumber" :allow-input="reg" placeholder="请输入转换数字"
+                clearable />
         </n-input-group>
     </div>
     <n-divider />
