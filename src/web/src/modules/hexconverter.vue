@@ -65,7 +65,7 @@ const oConvert = (scale) => {
 }
 const opNumber = computed(() => {
     //输入数字是否为空
-    return !ipNumber.value || ipNumber.value === '-' ? {
+    return !ipNumber.value || ipNumber.value === '-'|| ipNumber.value === '-.' || ipNumber.value === '.'? {
         two: null,
         four: null,
         eight: null,
@@ -120,9 +120,11 @@ const reg = (value) => {
         scale = convert(10, (ipOtherScale.value - 1), 32)////////////
     }
     let re = `[0-${scale}]`
-    // console.log('666', eval(`/^-?\\b${re}*\\b$/.test(value)`))
-    // console.log('re', re, 'scale', scale)
-    return !value || eval(`/^-?${re}*$/.test(value)`)
+    // let x=`/^-?${re}*(\\.?${re}*)?$/`
+    let reg=eval(`/^(-?${re}*)(\\.?${re}*)?$/`)
+    // console.log('666', reg.test(value),value,x)
+    return !value || reg.test(value)
+    // ^([+-]?)\d*\.?\d+$
 }
 
 //点击单选框与自定义进制时重置输入
