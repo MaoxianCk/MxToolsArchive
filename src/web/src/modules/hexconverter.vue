@@ -260,6 +260,104 @@ const reset = () => {
                 </tr>
             </tbody>
         </n-table>
+        <n-divider />
+        <div class="hex-title mb-10">0-15基数(二,八,十,十六)进制对照表:</div>
+        <n-table :single-line="false" :style="{ width: '800px' }" striped>
+            <thead>
+                <tr>
+                    <th>十进制</th>
+                    <th>二进制</th>
+                    <th>八进制</th>
+                    <th>十六进制</th>
+                    <th>十进制</th>
+                    <th>二进制</th>
+                    <th>八进制</th>
+                    <th>十六进制</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>8</td>
+                    <td>1000</td>
+                    <td>10</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>9</td>
+                    <td>1001</td>
+                    <td>11</td>
+                    <td>9</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>10</td>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>10</td>
+                    <td>1010</td>
+                    <td>12</td>
+                    <td>a</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>11</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>11</td>
+                    <td>1011</td>
+                    <td>13</td>
+                    <td>b</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>100</td>
+                    <td>4</td>
+                    <td>4</td>
+                    <td>12</td>
+                    <td>1100</td>
+                    <td>14</td>
+                    <td>c</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>101</td>
+                    <td>5</td>
+                    <td>5</td>
+                    <td>13</td>
+                    <td>1101</td>
+                    <td>15</td>
+                    <td>d</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>110</td>
+                    <td>6</td>
+                    <td>6</td>
+                    <td>14</td>
+                    <td>1110</td>
+                    <td>16</td>
+                    <td>e</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>111</td>
+                    <td>7</td>
+                    <td>7</td>
+                    <td>15</td>
+                    <td>1111</td>
+                    <td>17</td>
+                    <td>f</td>
+                </tr>
+            </tbody>
+        </n-table>
     </div>
 </template>
 
