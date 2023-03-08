@@ -109,22 +109,22 @@ const handleCopy = (text) => {
         message.error('你复制了个寂寞')
     }
 }
-//输入框不允许有空格
-// const noSpace = (value) =>!value || /^\S+$/.test(value) 
+
+//正则限制输入框输入
 const reg = (value) => {
     let scale
     if (inputScale.value !== 'on') {
         scale = convert(10, (inputScale.value - 1), 32)
     }
     else {
-        scale = convert(10, (ipOtherScale.value - 1), 32)////////////
+        scale = convert(10, (ipOtherScale.value - 1), 32)
     }
     let re = `[0-${scale}]`
     // let x=`/^-?${re}*(\\.?${re}*)?$/`
     let reg=eval(`/^(-?${re}*)(\\.?${re}*)?$/`)
-    // console.log('666', reg.test(value),value,x)
+    // console.log('bl', reg.test(value),value,x)
     return !value || reg.test(value)
-    // ^([+-]?)\d*\.?\d+$
+    // ^([+-]?)\d*\.?\d+$ 
 }
 
 //点击单选框与自定义进制时重置输入
@@ -138,7 +138,7 @@ const reset = () => {
 </script>
 
 <template>
-    <div class="hex-title  mt-20 mb-10">请选择待转换数的进制:</div>
+    <div class="hex-title  mb-10">请选择待转换数的进制:</div>
     <n-space>
         <n-radio-group v-model:value="inputScale" name="radiogroup" @click="reset">
             <n-space>
