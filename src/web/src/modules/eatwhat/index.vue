@@ -61,14 +61,14 @@ const scrollAnimate = () => {
         backFood.push({
             str: foodTemplates[parseInt(Math.random() * foodTemplates.length)], //随机选择菜名
             //获取background高度宽度并生成随机位置
-            sx: Math.random() * (w - 152),
+            sx: 20+Math.random() * (w - 132),
             sy: Math.random() * h,
             vy: -Math.random(), //随机位移速度
             color: colors[parseInt(Math.random() * colors.length)], //随机选择颜色
             size: Math.random() * 15 + 8, //文字尺寸范围为5-23
             age: 10 + Math.random() * 20 //起始生命值为10-30
         })
-        console.log(document.getElementById('background').offsetWidth, document.getElementById('background').offsetHeight)
+        // console.log(document.getElementById('background').offsetWidth, document.getElementById('background').offsetHeight)
     }
 }
 //选择
@@ -92,7 +92,7 @@ const getScroll = () => {
 
 <template>
     <div class="container">
-        <div id="background" class="back" style="height: 400px;width:100%"></div>
+        <div id="background" class="back" style="height: 500px;width:100%"></div>
         <n-space justify="center">
             <n-tooltip placement="bottom-start" trigger="hover">
                 <template #trigger>
@@ -115,13 +115,15 @@ const getScroll = () => {
 <style lang="scss" scoped>
 .container {
     background-color: whitesmoke;
-    height: 400px;
+    height: 500px;
+    width: 100%;
+    position: relative;
 }
 
 .eat-title {
     color: orange;
     font-size: 30px;
-    margin-top: 120px;
+    margin-top: 160px;
 }
 
 .eat-title:hover {
@@ -168,4 +170,5 @@ const getScroll = () => {
 
 .back span {
     white-space: nowrap;
-}</style>
+}
+</style>
