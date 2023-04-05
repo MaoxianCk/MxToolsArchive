@@ -61,12 +61,12 @@ const scrollAnimate = () => {
         backFood.push({
             str: foodTemplates[parseInt(Math.random() * foodTemplates.length)], //随机选择菜名
             //获取background高度宽度并生成随机位置
-            sx: 20+Math.random() * (w - 132),
+            sx: 20 + Math.random() * (w - 132),
             sy: Math.random() * h,
-            vy: -Math.random(), //随机位移速度
+            vy: -Math.random()-1, //随机位移速度
             color: colors[parseInt(Math.random() * colors.length)], //随机选择颜色
             size: Math.random() * 15 + 8, //文字尺寸范围为5-23
-            age: 10 + Math.random() * 20 //起始生命值为10-30
+            age: Math.random() * 20 //起始生命值为0-20
         })
         // console.log(document.getElementById('background').offsetWidth, document.getElementById('background').offsetHeight)
     }
@@ -74,7 +74,7 @@ const scrollAnimate = () => {
 //选择
 const getEnding = () => {
     loading.value = false
-    food.value= food.value.slice(0,  food.value.length - 1)
+    food.value = food.value.slice(0, food.value.length - 1)
     food.value += '!'
     bottonText.value = '开始'
 }
@@ -91,7 +91,7 @@ const getScroll = () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="bg">
         <div id="background" class="back" style="height: 500px;width:100%"></div>
         <n-space justify="center">
             <n-tooltip placement="bottom-start" trigger="hover">
@@ -113,17 +113,30 @@ const getScroll = () => {
 </template>
 
 <style lang="scss" scoped>
-.container {
-    background-color: whitesmoke;
-    height: 500px;
-    width: 100%;
-    position: relative;
-}
 
+.bg {
+  height: 500px;
+  position: relative;
+  width: 100%;
+  background-image: url('eat.jpg');
+  background-size: cover;
+  background-repeat: repeat-y;
+  animation: bg-animation 15s linear infinite;
+  background-position: 0 0;
+}
+@keyframes bg-animation {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 -676px;
+    }
+}
 .eat-title {
     color: orange;
     font-size: 30px;
-    margin-top: 160px;
+    margin-top: 180px;
 }
 
 .eat-title:hover {
