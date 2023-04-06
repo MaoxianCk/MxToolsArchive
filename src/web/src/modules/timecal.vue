@@ -61,15 +61,15 @@ const cal = computed(() => {
             <n-input-group class="mt-20">
                 距离时间：
                 <n-input-number v-model:value="time.yduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" /> 年
+                    style="width: 80px" />年&nbsp
                 <n-input-number v-model:value="time.Mduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" /> 月
+                    style="width: 80px" />月&nbsp
                 <n-input-number v-model:value="time.dduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" /> 天
+                    style="width: 80px" />天&nbsp
                 <n-input-number v-model:value="time.hduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" /> 时
+                    style="width: 80px" />时&nbsp
                 <n-input-number v-model:value="time.mduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" /> 分
+                    style="width: 80px" />分
             </n-input-group>
         </div>
     </mx-row>
