@@ -93,7 +93,9 @@ const getScroll = () => {
     const element = document.querySelector('.bg');
     element.style.animationPlayState = 'running';
     //文字不断跳转
-    timer = setInterval(scrollAnimate, 30)
+    if (timer === null) {
+        timer = setInterval(scrollAnimate, 30)
+    }
 }
 
 </script>
