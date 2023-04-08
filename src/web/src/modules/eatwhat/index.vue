@@ -63,7 +63,7 @@ const scrollAnimate = () => {
             //获取background高度宽度并生成随机位置
             sx: 20 + Math.random() * (w - 132),
             sy: Math.random() * h,
-            vy: -Math.random()-1, //随机位移速度
+            vy: -Math.random() - 1, //随机位移速度
             color: colors[parseInt(Math.random() * colors.length)], //随机选择颜色
             size: Math.random() * 15 + 8, //文字尺寸范围为5-23
             age: Math.random() * 20 //起始生命值为0-20
@@ -71,20 +71,28 @@ const scrollAnimate = () => {
         // console.log(document.getElementById('background').offsetWidth, document.getElementById('background').offsetHeight)
     }
 }
-//选择
+//选择按钮
 const getEnding = () => {
     loading.value = false
     food.value = food.value.slice(0, food.value.length - 1)
     food.value += '!'
     bottonText.value = '开始'
+    //暂停背景动画
+    const element = document.querySelector('.bg');
+    element.style.animationPlayState = 'paused';
+    element.style.animationFillMode = 'forwards';
 }
 
-//文字不断跳转
-let timer = 0
+//开始按钮
+let timer = null
 const getScroll = () => {
     back[0].innerHTML = ""
     loading.value = true
     bottonText.value = '就决定是你了！'
+    //使背景动画旋转
+    const element = document.querySelector('.bg');
+    element.style.animationPlayState = 'running';
+    //文字不断跳转
     timer = setInterval(scrollAnimate, 30)
 }
 
@@ -113,17 +121,17 @@ const getScroll = () => {
 </template>
 
 <style lang="scss" scoped>
-
 .bg {
-  height: 500px;
-  position: relative;
-  width: 100%;
-  background-image: url('eat.jpg');
-  background-size: cover;
-  background-repeat: repeat-y;
-  animation: bg-animation 15s linear infinite;
-  background-position: 0 0;
+    height: 500px;
+    position: relative;
+    width: 100%;
+    background-image: url('eat.jpg');
+    background-size: cover;
+    background-repeat: repeat-y;
+    animation: bg-animation 15s linear infinite forwards;
+    background-position: 0 0;
 }
+
 @keyframes bg-animation {
     0% {
         background-position: 0 0;
@@ -133,10 +141,12 @@ const getScroll = () => {
         background-position: 0 -676px;
     }
 }
+
 .eat-title {
     color: orange;
     font-size: 30px;
     margin-top: 180px;
+    backdrop-filter: blur(3px)
 }
 
 .eat-title:hover {

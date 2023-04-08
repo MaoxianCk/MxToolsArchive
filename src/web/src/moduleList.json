@@ -33,7 +33,7 @@
         "name": "时间戳转换器",
         "code": "timestampConverter",
         "author": "lynne",
-        "description": "从1970年1月1日(UTC/GMT的午夜)开始所经过的秒数与时间之间的转换",
+        "description": "从1970年1月1日（UTC/GMT的午夜）开始所经过的秒数与时间之间的转换",
         "keyword": [
           "cal",
           "计算器",
@@ -44,7 +44,7 @@
         "name": "时间计算器",
         "code": "timecal",
         "author": "lynne",
-        "description": "计算一个时间点距离一段时间前(后)的时间点",
+        "description": "计算一个时间点距离一段时间前（后）的时间点",
         "keyword": [
           "cal",
           "计算器",
