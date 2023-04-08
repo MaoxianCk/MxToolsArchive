@@ -98,6 +98,10 @@ const getScroll = () => {
     }
 }
 
+onUnmounted(() => {
+      clearInterval(timer);
+    });
+
 </script>
 
 <template>
