@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import moment from 'moment'
-let timer = 0
-
+import { ArrowDropUpFilled, ArrowDropDownFilled } from '@vicons/material'
+import { Icon } from '@vicons/utils'
+let timer = null
 const nowTime = ref('')
 
 const time = ref({
@@ -34,10 +35,10 @@ const cal = computed(() => {
     else {
         result = moment(time.value.nowdata).add(time.value.yduration, "years")
         // result = 
-        result=result.add(time.value.Mduration, "months")
-        result=result.add(time.value.dduration, "days")
-        result=result.add(time.value.hduration, "hours")
-        result=result.add(time.value.mduration, "minutes")
+        result = result.add(time.value.Mduration, "months")
+        result = result.add(time.value.dduration, "days")
+        result = result.add(time.value.hduration, "hours")
+        result = result.add(time.value.mduration, "minutes")
         console.log(result)
     }
     return result.format('YYYY-MM-DD HH:mm:ss')
@@ -52,7 +53,7 @@ const cal = computed(() => {
         <div class="timecal-title">
             <n-input-group class="mt-20">
                 开始时间：
-                <n-date-picker v-model:value="time.nowdata" type="datetime" clearable />
+                <n-date-picker v-model:value="time.nowdata" type="datetime" clearable  style="width: 255px"/>
             </n-input-group>
         </div>
     </mx-row>
@@ -61,15 +62,70 @@ const cal = computed(() => {
             <n-input-group class="mt-20">
                 距离时间：
                 <n-input-number v-model:value="time.yduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" />年&nbsp
+                    style="width: 90px">
+                    <template #minus-icon>
+                        <Icon>
+                            <ArrowDropDownFilled />
+                        </Icon>
+                    </template>
+                    <template #add-icon>
+                        <Icon>
+                            <ArrowDropUpFilled />
+                        </Icon>
+                    </template>
+                </n-input-number>年&nbsp
                 <n-input-number v-model:value="time.Mduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" />月&nbsp
+                    style="width: 90px">
+                    <template #minus-icon>
+                        <Icon>
+                            <ArrowDropDownFilled />
+                        </Icon>
+                    </template>
+                    <template #add-icon>
+                        <Icon>
+                            <ArrowDropUpFilled />
+                        </Icon>
+                    </template>
+                </n-input-number>月&nbsp
                 <n-input-number v-model:value="time.dduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" />天&nbsp
+                    style="width: 90px">
+                    <template #minus-icon>
+                        <Icon>
+                            <ArrowDropDownFilled />
+                        </Icon>
+                    </template>
+                    <template #add-icon>
+                        <Icon>
+                            <ArrowDropUpFilled />
+                        </Icon>
+                    </template>
+                </n-input-number>天&nbsp
                 <n-input-number v-model:value="time.hduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" />时&nbsp
+                    style="width: 90px">
+                    <template #minus-icon>
+                        <Icon>
+                            <ArrowDropDownFilled />
+                        </Icon>
+                    </template>
+                    <template #add-icon>
+                        <Icon>
+                            <ArrowDropUpFilled />
+                        </Icon>
+                    </template>
+                </n-input-number>时&nbsp
                 <n-input-number v-model:value="time.mduration" placeholder="请输入整数" min="-99999999" max="9999999"
-                    style="width: 80px" />分
+                    style="width: 90px">
+                    <template #minus-icon>
+                        <Icon>
+                            <ArrowDropDownFilled />
+                        </Icon>
+                    </template>
+                    <template #add-icon>
+                        <Icon>
+                            <ArrowDropUpFilled />
+                        </Icon>
+                    </template>
+                </n-input-number>分
             </n-input-group>
         </div>
     </mx-row>
@@ -77,7 +133,7 @@ const cal = computed(() => {
         <div class="mt-30 timecal-title">
             <!-- {{ Math.abs(time.dduration) }} 天{{ (time.dduration > 0 ? '后' : '前') }}的日期为: -->
             计算得到的时间结果为
-            {{cal }}
+            {{ cal }}
         </div>
     </mx-row>
 </template>
