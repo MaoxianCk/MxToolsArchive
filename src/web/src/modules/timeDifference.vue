@@ -6,7 +6,7 @@ let timer = 0
 const nowTime = ref('')
 
 const time = ref({
-  start: null,
+  start: moment().valueOf(),
   // 组件的时间用的是时间戳
   end: null
 })
